@@ -98,7 +98,7 @@ POST `api/Jobs` <-- NEEDS TO CHANGE?
 
 ---
 
-## Versioning to the rescue
+## <span class="orange">Versioning</span> to the rescue
 
 ---
 
@@ -136,7 +136,7 @@ Adding to your project?
 
 ---
 
-## Nuget
+## <span class="orange">Nuget</span>
 
 Microsoft.AspNetCore.Mvc.Versioning
 
@@ -167,6 +167,26 @@ namespace ConstructionApp.Jobs.V2
   [Produces("application/json")]
   [Route("api/jobs")]
   public class JobsController : Controller {}
+}
+```
+
+---
+
+```csharp
+namespace ConstructionApp.Jobs
+{
+  [ApiVersion("1.0")]
+  [ApiVersion("2.0")]
+  [Produces("application/json")]
+  [Route("api/jobs")]
+  public class JobsController : Controller 
+  {
+    [HttpPost]
+    public string Post() => CreateThing();
+
+    [HttpPost, MapToApiVersion("2.0")]
+    public string PostV2() => CreateThingV2();
+  }
 }
 ```
 
@@ -305,7 +325,6 @@ services.AddApiVersioning(o =>
 
 Add to a brownfield project
 
-
 ---
 
 ```csharp
@@ -332,7 +351,27 @@ namespace ConstructionApp.Jobs.V1
 }
 ```
 
-`GET` /api/jobs
+`GET /api/jobs`
+
+---
+
+```csharp
+namespace ConstructionApp.Jobs.V1
+{
+  [ApiVersion("1.0")]   //this becomes optional
+  [Produces("application/json")]
+  [Route("api/jobs")]
+  public class JobsController : Controller {}
+}
+```
+
+```csharp
+services.AddApiVersioning(o =>
+{
+    o.AssumeDefaultVersionWhenUnspecified = true;
+    //default version is 1.0
+});
+```
 
 ---
 
@@ -345,11 +384,11 @@ namespace ConstructionApp.Jobs.V1
 }
 ```
 
-`GET` /api/jobs?version=1.0 HTTP/1.1
+`GET /api/jobs?version=1.0`
 
 ---
 
-## Different default version?
+## <span class="orange">Different</span> default version?
 
 ---
 
@@ -407,7 +446,7 @@ Simple/easy to understand
 
 ---
 
-Lesson: Introduce as much complexity as you need
+<span class="orange">Lesson</span>: Introduce as much complexity as you need
 
 ---
 
@@ -415,37 +454,37 @@ Lesson: Introduce as much complexity as you need
 
 ---
 
-## Takeaways
+## <span class="orange">Takeaways</span>
 
 ALWAYS version up front when possible
 
 ---
 
-## Takeaways
+## <span class="orange">Takeaways</span>
 
 Versioning most common in URL
 
 ---
 
-## Takeaways
+## <span class="orange">Takeaways</span>
 
 Keep it simple when possible
 
 ---
 
-## Takeaways
+## <span class="orange">Takeaways</span>
 
 Document Document Document
 
 ---
 
-### Lots more info
+### <span class="orange">Lots more info</span>
 
 https://github.com/Microsoft/aspnet-api-versioning/wiki
 
 ---
 
-## Version strategy chosen
+## Version strategy <span class="orange">chosen</span>
 
 ---
 
@@ -453,7 +492,7 @@ https://github.com/Microsoft/aspnet-api-versioning/wiki
 
 ---
 
-## How to maintain?
+## How to <span class="orange">maintain</span>?
 
 ---
 
@@ -491,8 +530,10 @@ URL: `/api/v2.0/Jobs`
 
 ```json
 {
-    "name": "Building a Wal-Mart",
-    "code": "12345-67"
+    "name": "Office buildout",
+    "code": "12345-67",
+    "address": "123 Main Street",
+    "address2": "Suite 17"
 }
 ```
 
@@ -502,10 +543,8 @@ URL: `/api/v2.0/Jobs`
 
 ```json
 {
-    "name": "Office buildout",
-    "code": "12345-67",
-    "address": "123 Main Street",
-    "address2": "Suite 17"
+    "name": "Building a Wal-Mart",
+    "code": "12345-67"
 }
 ```
 
@@ -607,7 +646,7 @@ Hotfix? End of sprint?
 
 ---
 
-## Versions are a balancing act
+## Versions are a <span class="orange">balancing act</span>
 
 ---
 
@@ -657,7 +696,7 @@ Hotfix? End of sprint?
 
 ---
 
-### Deprecation is a good strategy
+### <span class="orange">Deprecation</span> is a good strategy
 
 ---
 
@@ -688,7 +727,7 @@ namespace ConstructionApp.Jobs.V1
 
 ---
 
-## <span class="orange">Documentation</span> way more useful
+#### <span class="orange">Documentation</span> way more useful
 
 ---
 
@@ -701,7 +740,7 @@ namespace ConstructionApp.Jobs.V1
 ---
 
 ```csharp
-namespace ConstructionApp.Jobs.V1
+namespace ConstructionApp.Jobs
 {
   [ApiVersion( "1.0", Deprecated = true )]
   [ApiVersion( "2.0")]
@@ -753,6 +792,15 @@ Break published APIs minimally
 ---
 
 Versioning > Breaking Changes
+
+---
+
+Maintenance is <span class="orange">hard</span>  
+Versioning is <span class="orange">hard</span>  
+
+---
+
+## Hard work up front
 
 ---
 
