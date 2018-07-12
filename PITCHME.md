@@ -1,8 +1,6 @@
 #### Versioning and Maintaining Your REST API
 
-###### <span class="orange">in ASP.NET Core</span>
-
-##### Spencer Schneidenbach
+#### Using <span class="orange">ASP.NET Core</span>
 
 @schneidenbach
 
@@ -12,19 +10,35 @@ Twitter <span class="orange">@schneidenbach</span>
 
 ## Slides plus more at
 
-<span class="orange">rest.schneids.net</span>
+<span class="blue">rest.schneids.net</span>
+
+---
+
+## You have a SaaS product
+
+---
+
+## You make widgets
+
+---
+
+## You do accounting
+
+---
+
+![](assets/shrug.jpg)
+
+---
+
+# Integration
 
 ---
 
 ![](assets/boss.jpg)
 
-"I want a new API"
-
 ---
 
-![](assets/boss.jpg)
-
-"I want a new REST API"
+# REST API
 
 ---
 
