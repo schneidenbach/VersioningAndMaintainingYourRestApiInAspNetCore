@@ -1,4 +1,6 @@
-#### Versioning and Maintaining Your REST API in ASP.NET Core
+#### Versioning and Maintaining Your REST API
+
+###### <span class="orange">in ASP.NET Core</span>
 
 ##### Spencer Schneidenbach
 
@@ -6,11 +8,11 @@
 
 ---
 
-Twitter @schneidenbach
+Twitter <span class="orange">@schneidenbach</span>
 
 ## Slides plus more at
 
-rest.schneids.net
+<span class="orange">rest.schneids.net</span>
 
 ---
 
@@ -64,7 +66,7 @@ rest.schneids.net
 
 ---
 
-## "Typical" REST URLs
+## <span class="orange">"Typical" REST URLs</span>
 
 GET `api/Jobs`  
 GET `api/Jobs/12345`  
@@ -73,12 +75,12 @@ POST `api/Jobs`
 
 ---
 
-## "Typical" REST URLs
+## <span class="orange">"Typical" REST URLs</span>
 
 GET `api/Jobs`  
 GET `api/Jobs/12345`  
 PUT `api/Jobs/12345`  
-POST `api/Jobs` NEEDS TO CHANGE?
+POST `api/Jobs` <-- NEEDS TO CHANGE?
 
 ---
 
@@ -86,7 +88,15 @@ POST `api/Jobs` NEEDS TO CHANGE?
 
 ---
 
-## Version formats
+#### <span class="orange">Lots of different version options</span>
+
+URL versioning  
+Header versioning  
+Content type versioning
+
+---
+
+## <span class="orange">Version formats</span>
 
 * /api/foo?api-version=1.0
 * /api/foo?api-version=2.0-Alpha
@@ -99,7 +109,16 @@ https://github.com/Microsoft/aspnet-api-versioning/wiki/Version-Format
 
 ---
 
-Truth is, you don't need 'em
+Truth is, you (probably) <span class="orange">don't need 'em</span>
+
+---
+
+# v1
+# v2
+
+---
+
+Adding to your project?
 
 ---
 
@@ -116,17 +135,6 @@ public void ConfigureServices(IServiceCollection services)
     services.AddApiVersioning();
 }
 ```
-
----
-
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddMvc();
-    services.AddApiVersioning();
-}
-```
-Query string by default
 
 ---
 
@@ -150,6 +158,10 @@ namespace ConstructionApp.Jobs.V2
 
 ---
 
+## <span class="orange">Header</span> versioning
+
+---
+
 ```csharp
 services.AddApiVersioning(o =>
 {
@@ -157,9 +169,12 @@ services.AddApiVersioning(o =>
 });
 ```
 
-`GET` /api/Jobs HTTP/1.1  
-Host: localhost  
-X-Api-Version: 2.0
+URL: `/api/Jobs`  
+Header: `X-Api-Version: 2.0`
+
+---
+
+## <span class="orange">Query string</span> versioning
 
 ---
 
@@ -170,8 +185,17 @@ services.AddApiVersioning(o =>
 });
 ```
 
-`GET` /api/Jobs?version=2.0 HTTP/1.1  
-Host: localhost  
+URL: `/api/Jobs?version=2.0`
+
+---
+
+## <span class="orange">Route</span> versioning
+
+---
+
+## <span class="orange">Route</span> versioning
+
+(Spencer's personal favorite)
 
 ---
 
@@ -201,8 +225,11 @@ services.AddApiVersioning(o =>
 });
 ```
 
-`GET` /api/v2.0/Jobs HTTP/1.1  
-Host: localhost  
+URL: `/api/v2.0/Jobs`
+
+---
+
+## <span class="orange">Media type</span> versioning
 
 ---
 
@@ -213,9 +240,9 @@ services.AddApiVersioning(o =>
 });
 ```
 
-`GET` /api/Jobs HTTP/1.1  
-Host: localhost  
-Accept: application/json;v=1.0
+URL: `/api/Jobs`  
+Method: `GET`  
+Header: `Accept: application/json;v=1.0`
 
 ---
 
@@ -226,9 +253,13 @@ services.AddApiVersioning(o =>
 });
 ```
 
-`POST` /api/Jobs HTTP/1.1  
-Host: localhost  
-Content-Type: application/json;v=1.0
+URL: `/api/Jobs`  
+Method: `POST`  
+Header: `Content-Type: application/json;v=1.0`
+
+---
+
+## Versions are <span class="orange">composable</span>
 
 ---
 
@@ -246,7 +277,7 @@ services.AddApiVersioning(o =>
 
 ---
 
-Adding versions to existing APIs
+Adding versions to <span class="orange">existing APIs</span>?
 
 ---
 
@@ -256,6 +287,21 @@ services.AddApiVersioning(o =>
     o.AssumeDefaultVersionWhenUnspecified = true;
     //default version is 1.0
 });
+```
+
+Add to a brownfield project
+
+
+---
+
+```csharp
+namespace ConstructionApp.Jobs.V1
+{
+  [ApiVersionNeutral]
+  [Produces("application/json")]
+  [Route("api/jobs")]
+  public class JobsController : Controller {}
+}
 ```
 
 Add to a brownfield project
@@ -272,7 +318,7 @@ namespace ConstructionApp.Jobs.V1
 }
 ```
 
-`GET` /api/jobs HTTP/1.1
+`GET` /api/jobs
 
 ---
 
@@ -286,6 +332,10 @@ namespace ConstructionApp.Jobs.V1
 ```
 
 `GET` /api/jobs?version=1.0 HTTP/1.1
+
+---
+
+## Different default version?
 
 ---
 
@@ -303,17 +353,21 @@ services.AddApiVersioning(o =>
 
 ---
 
+![](assets/swagger.png)
+
+---
+
 # Swagger?
 
 https://github.com/Microsoft/aspnet-api-versioning/wiki/Swashbuckle-Integration
 
 ---
 
-The real question
+## The <span class="orange">real question</span>
 
 ---
 
-Do you need this?
+## Do you <span class="orange">need</span> this?
 
 ---
 
@@ -349,7 +403,7 @@ Lesson: Introduce as much complexity as you need
 
 ## Takeaways
 
-Do it up front when possible
+ALWAYS version up front when possible
 
 ---
 
@@ -371,17 +425,21 @@ Document Document Document
 
 ---
 
-### Lots more options
+### Lots more info
 
 https://github.com/Microsoft/aspnet-api-versioning/wiki
 
 ---
 
-Version strategy chosen
+## Version strategy chosen
 
 ---
 
-How to maintain?
+![](assets/boss.jpg)
+
+---
+
+## How to maintain?
 
 ---
 
@@ -389,18 +447,21 @@ Application lifecycle question
 
 ---
 
+![](assets/angry.jpg)
+
+---
+
 ![](assets/break-contract.jpg)
 
 ---
 
-# RULE
+# <span class="orange">RULE</span>
 
 Don't break contracts. Ever.
 
 ---
 
-`GET` /api/v2.0/Jobs HTTP/1.1  
-Host: localhost  
+URL: `/api/v2.0/Jobs`  
 
 ```json
 {
@@ -412,22 +473,7 @@ Host: localhost
 
 ---
 
-`GET` /api/v2.0/Jobs HTTP/1.1  
-Host: localhost  
-
-```json
-{
-    "name": "Office buildout",
-    "code": "12345-67",
-    "address": "123 Main Street",
-    "address2": "Suite 17"
-}
-```
-
----
-
-`GET` /api/v2.0/Jobs HTTP/1.1  
-Host: localhost  
+URL: `/api/v2.0/Jobs`  
 
 ```json
 {
@@ -438,37 +484,7 @@ Host: localhost
 
 ---
 
-# RULE
-
-Don't break contracts. Ever.
-
----
-
-# RULE
-
-Don't break contracts. Ever.  
-
-...is ideal
-
----
-
-# RULE
-
-Don't break contracts. Ever.  
-
-...is just not practical
-
----
-
-Who/What/Where/When/Why
-
----
-
-# Why?
-
----
-
-# Why
+URL: `/api/v2.0/Jobs`  
 
 ```json
 {
@@ -481,7 +497,50 @@ Who/What/Where/When/Why
 
 ---
 
-# Who
+# <span class="orange">RULE</span>
+
+Don't break contracts. Ever.
+
+---
+
+# <span class="orange">RULE</span>
+
+Don't break contracts. Ever.  
+
+...is ideal
+
+---
+
+# <span class="orange">RULE</span>
+
+Don't break contracts. Ever.  
+
+...is just not practical
+
+---
+
+Who/What/Where/When/Why/How
+
+---
+
+# Why?
+
+---
+
+# Why?
+
+```json
+{
+    "name": "Office buildout",
+    "code": "12345-67",
+    "address": "123 Main Street",
+    "address2": "Suite 17"
+}
+```
+
+---
+
+# Who?
 
 ...is your consumer?  
 * Internal?
@@ -489,13 +548,19 @@ Who/What/Where/When/Why
 
 ---
 
-# What
+# What?
 
 ...needs changing?
 
 ---
 
-# Where
+# How?
+
+...urgent is it?
+
+---
+
+# Where?
 
 ...are you in development?
 
@@ -505,11 +570,12 @@ Who/What/Where/When/Why
 
 ---
 
-### Timeline
+### <span class="orange">Timeline</span>
 
 * March 2018 - POC completed
-* May 2018 - Return objects solidified
-* July 2018 - QC passed
+* May 2018 - First draft complete
+* June 2018 - Final draft complete
+* July 2018 - API made public
 
 ---
 
@@ -523,7 +589,7 @@ Hotfix? End of sprint?
 
 ---
 
-## What is your versioning strategy?
+### What is your <span class="orange">versioning strategy</span>?
 
 ---
 
@@ -531,7 +597,7 @@ Hotfix? End of sprint?
 
 ---
 
-# Version 2.0
+## Version 2.0
 
 ```json
 {
@@ -544,7 +610,7 @@ Hotfix? End of sprint?
 
 ---
 
-# Version 3.0
+## Version 3.0
 
 ```json
 {
@@ -558,7 +624,7 @@ Hotfix? End of sprint?
 
 ---
 
-# Version 56.0
+## Version 56.0
 
 ```javascript
 {
@@ -573,7 +639,7 @@ Hotfix? End of sprint?
 
 ---
 
-![](assets/yoda.jpg)
+![](assets/angry.jpg)
 
 ---
 
@@ -584,6 +650,7 @@ Hotfix? End of sprint?
 ```csharp
 namespace ConstructionApp.Jobs.V1
 {
+  [ApiVersion( "1.0", Deprecated = true )]
   [Produces("application/json")]
   [Route("api/v1/jobs")]
   public class JobsController : Controller {}
@@ -595,6 +662,7 @@ namespace ConstructionApp.Jobs.V1
 ```csharp
 namespace ConstructionApp.Jobs.V1
 {
+  [ApiVersion( "1.0", Deprecated = true )]
   [Produces("application/json")]
   [Route("api/v1/jobs")]
   public class JobsController : Controller {}
@@ -602,35 +670,75 @@ namespace ConstructionApp.Jobs.V1
 ```
 
 #### Response includes:  
-api-deprecated-versions: 1.0
+`api-deprecated-versions: 1.0`
 
 ---
 
-## Takeaways
-
-Break minimally
+## <span class="orange">Documentation</span> way more useful
 
 ---
 
-## Takeaways
+### Change management is <span class="orange">HARD</span>
+
+---
+
+![](assets/twitter.png)
+
+---
+
+```csharp
+namespace ConstructionApp.Jobs.V1
+{
+  [ApiVersion( "1.0", Deprecated = true )]
+  [ApiVersion( "2.0")]
+  [Produces("application/json")]
+  [Route("api/v1/jobs")]
+  public class JobsController : Controller
+  {
+    [HttpGet]
+    public string Get() => "Hello world!"
+
+    [HttpGet, MapToApiVersion( "2.0" )]
+    public string GetV2() => "Hello world v2.0!";
+  }
+}
+```
+
+---
+
+![](assets/yoda.jpg)
+
+---
+
+## <span class="orange">Takeaways</span>
+
+Break published APIs minimally
+
+---
+
+## <span class="orange">Takeaways</span>
 
 Remember app lifecycle
 
 ---
 
-## Takeaways
+## <span class="orange">Takeaways</span>
 
 Fix bugs, but... break minimally
 
 ---
 
-## Takeaways
+## <span class="orange">Did I Mention?</span>
 
-Break minimally
+Break published APIs minimally
 
 ---
 
-The bottom line is that we have to build
+![](assets/angry.jpg)
+
+---
+
+Versioning > Breaking Changes
 
 ---
 
